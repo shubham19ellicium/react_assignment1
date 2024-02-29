@@ -1,9 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
-import RenderForms from "./components/RenderForms";
+import RenderForms from "./components/renderFormComponent/RenderForms";
+import SideNav from "./components/sidebarCircleNav/SideNav";
 
 function App() {
   const [stepNumber, setStepNumber] = useState(1);
+  const [circleFlag, setCircleFlag] = useState({
+    circl1: true,
+    circl2: false,
+    circl3: false,
+    circl4: false,
+  });
+
+  const handleStepChange = (target) => {
+    setStepNumber(target);
+  };
 
   const handleIncrementStepChange = (e) => {
     setStepNumber((prev) => prev + 1);
@@ -13,63 +24,84 @@ function App() {
     setStepNumber((prev) => prev - 1);
   };
 
+  useEffect(() => {
+    // console.log("COUNT ::: ", stepNumber);
+    switch (stepNumber) {
+      case 1:
+        setCircleFlag({
+          circl1: true,
+          circl2: false,
+          circl3: false,
+          circl4: false,
+        });
+        break;
+
+      case 2:
+        setCircleFlag({
+          circl1: false,
+          circl2: true,
+          circl3: false,
+          circl4: false,
+        });
+        break;
+
+      case 3:
+        setCircleFlag({
+          circl1: false,
+          circl2: false,
+          circl3: true,
+          circl4: false,
+        });
+        break;
+
+      case 4:
+        setCircleFlag({
+          circl1: false,
+          circl2: false,
+          circl3: false,
+          circl4: true,
+        });
+        break;
+
+      default:
+        break;
+    }
+
+  }, [stepNumber]);
+
   return (
     <div className="main-container">
       <div className="container">
         <div className="left-block">
           <div className="steps-container">
-            <div className="step-block">
-              <div
-                className="step-circle"
-                // onclick="manageClick(1)"
-                id="step-circle-1-id"
-              >
-                <span>1</span>
-              </div>
-              <div className="step-title-block">
-                <p className="step-text">STEP 1</p>
-                <p className="step-title">YOUR INFO</p>
-              </div>
-            </div>
-            <div className="step-block">
-              <div
-                className="step-circle"
-                // onclick="manageClick(2)"
-                id="step-circle-2-id"
-              >
-                <span>2</span>
-              </div>
-              <div className="step-title-block">
-                <p className="step-text">STEP 2</p>
-                <p className="step-title">SELECT PLAN</p>
-              </div>
-            </div>
-            <div className="step-block">
-              <div
-                className="step-circle"
-                // onclick="manageClick(3)"
-                id="step-circle-3-id"
-              >
-                <span>3</span>
-              </div>
-              <div className="step-title-block">
-                <p className="step-text">STEP 3</p>
-                <p className="step-title">ADD ONS</p>
-              </div>
-            </div>
-            <div className="step-block">
-              <div
-                className="step-circle"
-                // onclick="manageClick(4)"
-                id="step-circle-4-id"
-              >
-                <span>4</span>
-              </div>
-              <div className="step-title-block">
-                <p className="step-text">STEP 4</p>
-                <p className="step-title">SUMMARY</p>
-              </div>
-            </div>
+            <SideNav data = {{
+              circleFlag : {circleFlag},
+              handleStepChange : {handleStepChange},
+              circleCount:1,
+              text : "STEP 1",
+              title : "YOUR INFO",
+            }} />
+            <SideNav data = {{
+              circleFlag : {circleFlag},
+              handleStepChange : {handleStepChange},
+              circleCount:2,
+              text : "STEP 2",
+              title : "SELECT PLAN",
+            }} />
+            <SideNav data = {{
+              circleFlag : {circleFlag},
+              handleStepChange : {handleStepChange},
+              circleCount:3,
+              text : "STEP 3",
+              title : "SELECT PLAN",
+            }} />
+            <SideNav data = {{
+              circleFlag : {circleFlag},
+              handleStepChange : {handleStepChange},
+              circleCount:4,
+              text : "STEP 4",
+              title : "SELECT PLAN",
+            }} />
           </div>
         </div>
         <div className="right-block">
