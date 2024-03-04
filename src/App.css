@@ -96,3 +96,109 @@
   height: 100%;
   padding: 64px;
 }
+
+@media screen and (max-width: 576px) and (min-width: 300px) {
+
+  .main-container{
+      height: fit-content;
+      min-height: 700px;
+      align-items: start;
+  }
+
+  .container{
+      flex-direction: column;
+      padding: 0px;
+      background-color: transparent;
+  }  
+
+  .left-block{
+      height: 300px;
+      width: 100vw;
+      margin: 0px;
+      background-repeat: no-repeat;
+      background-size: cover; 
+      background-position: center bottom;
+      
+  }
+
+  .steps-container{
+      display: flex;
+      justify-content: center;
+  }
+
+  .right-block{
+      width: 100%;
+      height: fit-content;
+  }
+
+  .step-title-block{
+      display: none;
+  }
+
+  .form-wrapper{
+      padding: 16px;
+      margin-top: -200px;
+      /* background-color: white; */
+  }
+
+  .step-circle{
+      height: 40px;
+      width: 40px;
+      margin: 16px 8px;
+  }
+
+  .personal-info-block{
+      background-color: white;
+      padding: 16px;
+  }
+
+  .select-plan-block{
+      background-color: white;
+      padding: 16px;
+  }
+
+  .next-button-block{
+      position: fixed;
+      left: 0px;
+      bottom: 0px;
+      background-color: white;
+      width: 100vw;
+      padding: 16px;
+  }
+
+  .selection-block-container{
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+      width: 100%;
+      padding: 16px;
+  }
+
+  .selection-block{
+      display: flex;
+      justify-content: normal;
+      flex-direction: row;
+      height: fit-content;
+      width: 100%;
+      margin: 8px 0px;
+  }
+
+  .selection-details{
+      margin: 0px 18px;
+  }
+
+  .period-selection-block{
+      margin: 16px 0px;
+  }
+
+  .add-on-block{
+      background-color: white;
+      padding: 16px;
+  }
+
+  .finish-up-block{
+      background-color: white;
+      padding: 16px;
+  }
+
+}

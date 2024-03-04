@@ -1,4 +1,5 @@
 export const validateEmailExtension = (string) => {
+  let wordCheckReg = /^[a-zA-Z]+$/
   var arr = string.split("@");
   if (arr.length > 1) {
     var min = arr[1].split(".");
@@ -7,9 +8,22 @@ export const validateEmailExtension = (string) => {
       return false;
     } else if (hasDuplicates(min)) {
       return false;
-    } else {
+    } else if (min.length>0) {
+      if (wordCheckReg.test(min[0]) === false || wordCheckReg.test(min[1]) === false) {
+        return false;
+      }else{
+        return true
+      }
+    }
+     else {
       return true;
     }
+    
+    // else if (min.length>0) {
+    //   if (wordCheckReg.test(min[0]) === false || wordCheckReg.test(min[1]) === false) {
+    //     return false;
+    //   }
+    // } 
   }
 };
 
@@ -36,4 +50,19 @@ export function numberValidation(params) {
     } else {
         return true
     }
+}
+
+/**
+ * Function to format according to required string
+ * 
+ * @param {String} period 
+ * @param {String} price 
+ * @returns {String}
+ */
+export let formatString = (period,price) => {
+  if(period === "year"){
+      return `$${price}/yr`
+  }else if(period === 'month'){
+      return `$${price}/mo`
+  }
 }

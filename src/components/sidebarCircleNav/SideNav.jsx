@@ -2,7 +2,8 @@ import React from "react";
 import "./SideNav";
 
 const SideNav = (props) => {
-  const { circleFlag, handleStepChange, circleCount, text, title } = props.data;
+  const { circleFlag, handleStepChange, circleCount, text, title, noneFlag } =
+    props.data;
   return (
     <>
       <div className="step-block">
@@ -12,7 +13,12 @@ const SideNav = (props) => {
               ? "step-circle-active"
               : "step-circle"
           }
-          onClick={() => handleStepChange.handleStepChange(circleCount)}
+          // onClick={() => handleStepChange.handleStepChange(circleCount)}
+          onClick={() => {
+            if (noneFlag === false) {
+              return handleStepChange.handleStepChange(circleCount);
+            }
+          }}
         >
           <span>{circleCount}</span>
         </div>

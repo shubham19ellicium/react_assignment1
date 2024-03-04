@@ -11,21 +11,29 @@ function App() {
     circl3: false,
     circl4: false,
   });
+  const [currentStep,setCurrentStep] = useState(1)
+  const [selectScope, setSelectScope] = useState(1)
+
+  const [noneFlag,setNonFlag] = useState(false)
 
   const handleStepChange = (target) => {
-    setStepNumber(target);
+    if (selectScope >= parseInt(target)) {
+      setStepNumber(target);
+    }
   };
 
   const handleIncrementStepChange = (e) => {
     setStepNumber((prev) => prev + 1);
+    setSelectScope((prev) => prev + 1)
+    // setCurrentStep((prev) => prev + 1)
   };
 
   const handleDecrementStepChange = (e) => {
     setStepNumber((prev) => prev - 1);
+    // setCurrentStep((prev) => prev - 1)
   };
 
   useEffect(() => {
-    // console.log("COUNT ::: ", stepNumber);
     switch (stepNumber) {
       case 1:
         setCircleFlag({
@@ -80,6 +88,7 @@ function App() {
               circleCount:1,
               text : "STEP 1",
               title : "YOUR INFO",
+              noneFlag:noneFlag
             }} />
             <SideNav data = {{
               circleFlag : {circleFlag},
@@ -87,6 +96,7 @@ function App() {
               circleCount:2,
               text : "STEP 2",
               title : "SELECT PLAN",
+              noneFlag:noneFlag
             }} />
             <SideNav data = {{
               circleFlag : {circleFlag},
@@ -94,6 +104,7 @@ function App() {
               circleCount:3,
               text : "STEP 3",
               title : "SELECT PLAN",
+              noneFlag:noneFlag
             }} />
             <SideNav data = {{
               circleFlag : {circleFlag},
@@ -101,6 +112,7 @@ function App() {
               circleCount:4,
               text : "STEP 4",
               title : "SELECT PLAN",
+              noneFlag:noneFlag
             }} />
           </div>
         </div>
@@ -108,8 +120,10 @@ function App() {
           <div className="form-wrapper">
             <RenderForms
               stepNumber={stepNumber}
+              handleStepChange = {handleStepChange}
               handleIncrementStepChange={handleIncrementStepChange}
               handleDecrementStepChange={handleDecrementStepChange}
+              handleStepFlag = {setNonFlag}
             />
           </div>
         </div>
