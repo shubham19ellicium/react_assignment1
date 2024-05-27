@@ -4,11 +4,11 @@ const DisplaySummary = (props) => {
   let { title, price } = props.obj;
   return (
     <>
-      <div class="finish-add-on-block">
-        <div class="finish-add-detail-block">
+      <div className="finish-add-on-block">
+        <div className="finish-add-detail-block">
           <p>{title}</p>
         </div>
-        <div class="finish-add-on-price-block">
+        <div className="finish-add-on-price-block">
           <p>{price}</p>
         </div>
       </div>

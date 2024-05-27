@@ -11,7 +11,6 @@ function App() {
     circl3: false,
     circl4: false,
   });
-  const [currentStep,setCurrentStep] = useState(1)
   const [selectScope, setSelectScope] = useState(1)
 
   const [noneFlag,setNonFlag] = useState(false)
@@ -25,12 +24,10 @@ function App() {
   const handleIncrementStepChange = (e) => {
     setStepNumber((prev) => prev + 1);
     setSelectScope((prev) => prev + 1)
-    // setCurrentStep((prev) => prev + 1)
   };
 
   const handleDecrementStepChange = (e) => {
     setStepNumber((prev) => prev - 1);
-    // setCurrentStep((prev) => prev - 1)
   };
 
   useEffect(() => {

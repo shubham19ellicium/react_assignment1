@@ -12,6 +12,7 @@ import {
 import AddOnBlock from "../addOnsBlock/AddOnBlock";
 import DisplaySummary from "../summaryDisplay/DisplaySummary";
 import AddOn from "../addOnsBlock/AddOn";
+import StepOne from "../step1/StepOne";
 
 const RenderForms = (props) => {
   const [name, setName] = useState("");
@@ -58,9 +59,6 @@ const RenderForms = (props) => {
     custom_service: 20,
   };
 
-  if (selectPlainDuration === "yearly") {
-  }
-
   useEffect(() => {
     switch (selectPlain) {
       case "Arcade":
@@ -92,12 +90,26 @@ const RenderForms = (props) => {
     }
   }, [selectPlainDuration]);
 
+  useEffect(() => {
+    if (props.stepNumber === 5) {
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
+
+      props.handleStepFlag(true);
+      console.log("I AM PRINTING");
+    }
+  }, [props.stepNumber]);
+
   let checkName = (inputName) => {
     var regex = /^[A-Za-z\s]+$/;
 
     if (inputName.length === 0) {
       setNameErrorFlag(true);
       setNameErrorMessage("Field should not be empty");
+    } else if (!regex.test(inputName)) {
+      setNameErrorFlag(true);
+      setNameErrorMessage("Only charecters allowed");
     } else if (inputName.length === 30) {
       setNameErrorFlag(true);
       setNameErrorMessage("Reached Max Limit");
@@ -105,10 +117,7 @@ const RenderForms = (props) => {
       setTimeout(() => {
         setNameErrorFlag(false);
         setNameErrorMessage("");
-      }, 3000);
-    } else if (!regex.test(inputName)) {
-      setNameErrorFlag(true);
-      setNameErrorMessage("Only charecters allowed");
+      }, 1000);
     } else {
       setNameErrorFlag(false);
       setNameErrorMessage("");
@@ -137,6 +146,14 @@ const RenderForms = (props) => {
     } else if (regex.test(phoneNumber)) {
       setPhoneErrorFlag(true);
       setPhoneErrorMessage("Enter valid phone number");
+    } else if (phoneNumber.length === 10) {
+      setPhoneErrorFlag(true);
+      setPhoneErrorMessage("Reached Max Limit");
+
+      setTimeout(() => {
+        setPhoneErrorFlag(false);
+        setPhoneErrorMessage("");
+      }, 1000);
     } else {
       setPhoneErrorFlag(false);
       setPhoneErrorMessage("");
@@ -182,9 +199,12 @@ const RenderForms = (props) => {
       numberValidation(inputPhone)
     ) {
       sessionStorage.setItem("username", inputName.replace(/\s+/g, " "));
+      // sessionStorage.setItem("username", inputName);
       increment();
     } else {
       console.log("*********  ***********");
+      checkPhone(inputPhone);
+      checkName(inputName);
     }
   };
 
@@ -253,61 +273,62 @@ const RenderForms = (props) => {
     }
   };
 
-  let addOnObject = [
-    {
-      title: "Online Service",
-      subTitle: "Access to multiplayer games",
-      plainDuration:
-        selectPlainDuration === "monthly"
-          ? formatString("month", MONTHLY_PRICE.online_service)
-          : formatString("year", YEARLY_PRICE.online_service),
-      key: "Online Service",
-      money:
-        selectPlainDuration === "monthly"
-          ? MONTHLY_PRICE.online_service
-          : YEARLY_PRICE.online_service,
-    },
-    {
-      title: "Larger storage",
-      subTitle: "Extra 1TB of cloud save",
-      plainDuration:
-        selectPlainDuration === "monthly"
-          ? formatString("month", MONTHLY_PRICE.large_service)
-          : formatString("year", YEARLY_PRICE.large_service),
-      key: "Large Service",
-      money:
-        selectPlainDuration === "monthly"
-          ? MONTHLY_PRICE.large_service
-          : YEARLY_PRICE.large_service,
-    },
-    {
-      title: "Customizable Profile",
-      subTitle: "Custom theme on your profile",
-      plainDuration:
-        selectPlainDuration === "monthly"
-          ? formatString("month", MONTHLY_PRICE.custom_service)
-          : formatString("year", YEARLY_PRICE.custom_service),
-      key: "Custom Service",
-      money:
-        selectPlainDuration === "monthly"
-          ? MONTHLY_PRICE.custom_service
-          : YEARLY_PRICE.custom_service,
-    },
-  ];
-
+  // let addOnObject = [
+  //   {
+  //     title: "Online Service",
+  //     subTitle: "Access to multiplayer games",
+  //     plainDuration:
+  //       selectPlainDuration === "monthly"
+  //         ? formatString("month", MONTHLY_PRICE.online_service)
+  //         : formatString("year", YEARLY_PRICE.online_service),
+  //     key: "Online Service",
+  //     money:
+  //       selectPlainDuration === "monthly"
+  //         ? MONTHLY_PRICE.online_service
+  //         : YEARLY_PRICE.online_service,
+  //   },
+  //   {
+  //     title: "Larger storage",
+  //     subTitle: "Extra 1TB of cloud save",
+  //     plainDuration:
+  //       selectPlainDuration === "monthly"
+  //         ? formatString("month", MONTHLY_PRICE.large_service)
+  //         : formatString("year", YEARLY_PRICE.large_service),
+  //     key: "Large Service",
+  //     money:
+  //       selectPlainDuration === "monthly"
+  //         ? MONTHLY_PRICE.large_service
+  //         : YEARLY_PRICE.large_service,
+  //   },
+  //   {
+  //     title: "Customizable Profile",
+  //     subTitle: "Custom theme on your profile",
+  //     plainDuration:
+  //       selectPlainDuration === "monthly"
+  //         ? formatString("month", MONTHLY_PRICE.custom_service)
+  //         : formatString("year", YEARLY_PRICE.custom_service),
+  //     key: "Custom Service",
+  //     money:
+  //       selectPlainDuration === "monthly"
+  //         ? MONTHLY_PRICE.custom_service
+  //         : YEARLY_PRICE.custom_service,
+  //   },
+  // ];
 
   // eslint-disable-next-line no-extend-native
   // String.prototype.capitalizeFirstLetter = function () {
   //   return this.charAt(0).toUpperCase() + this.slice(1);
   // };
 
-  const capitalizeFirstLetter = str => {
+  const capitalizeFirstLetter = (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
   const handleUpdatePackageName = () => {
     // let nameString = `${selectPlain} (${selectPlainDuration.capitalizeFirstLetter()})`;
-    let nameString = `${selectPlain} (${capitalizeFirstLetter(selectPlainDuration)})`;
+    let nameString = `${selectPlain} (${capitalizeFirstLetter(
+      selectPlainDuration
+    )})`;
     return nameString;
   };
 
@@ -332,7 +353,6 @@ const RenderForms = (props) => {
     // Object.keys(services.addons).map((addon, idx) =>{
     //   console.log("services.addons[addon].money ",services.addons[addon].money);
     // })
-
     let addOnSum = Object.keys(services.addons).reduce(
       (accumulator, currentValue) => {
         if (formData[currentValue] === true) {
@@ -418,6 +438,23 @@ const RenderForms = (props) => {
   switch (props.stepNumber) {
     case 1:
       return (
+        // <>
+        //   <StepOne
+        //     name={name}
+        //     phone={phone}
+        //     email={email}
+        //     handleFormSubmit={handleFormSubmit}
+        //     nameErrorFlag= {nameErrorFlag}
+        //     nameErrorMessage = {nameErrorMessage}
+        //     handleNameChange = {handleNameChange}
+        //     emailErrorFlag= {emailErrorFlag}
+        //     emialErrorMessage = {emialErrorMessage}
+        //     handleEmailChange = {handleEmailChange}
+        //     phoneErrorFlag= {phoneErrorFlag}
+        //     phoneErrorMessage = {phoneErrorMessage}
+        //     handlePhoneChange = {handlePhoneChange}
+        //   />
+        // </>
         <form
           onSubmit={handleFormSubmit}
           className="personal-info-block"
@@ -775,6 +812,7 @@ const RenderForms = (props) => {
                       if (formData[addon] === true) {
                         return (
                           <DisplaySummary
+                            key={idx}
                             obj={{
                               title: services.addons[addon].title,
                               price:
@@ -832,18 +870,18 @@ const RenderForms = (props) => {
       );
 
     case 5:
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 3000);
 
-      props.handleStepFlag(true);
+      // props.handleStepFlag(true);
 
       return (
-        <div class="thank-you-block" id="thank-you-id">
-          <div class="thank-you-card">
-            <img src={doneImage} class="checked-image" alt="" />
+        <div className="thank-you-block" id="thank-you-id">
+          <div className="thank-you-card">
+            <img src={doneImage} className="checked-image" alt="" />
             <h2>Thank you!</h2>
-            <div class="thank-you-text-block">
+            <div className="thank-you-text-block">
               <p>
                 Thanks for confirming your subscription! We hope you have fun
                 using our platform. If you ever need support, please feel free
